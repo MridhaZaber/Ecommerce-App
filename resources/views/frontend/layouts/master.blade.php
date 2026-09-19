@@ -7,7 +7,7 @@
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <title>@yield('title')</title>
-     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="icon" type="image/png" href="images/favicon.png">
     <link rel="stylesheet" href="{{ asset('frontend/css/all.min.css') }}">
@@ -26,7 +26,7 @@
 
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/responsive.css') }}">
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <!-- <link rel="stylesheet" href="css/rtl.css"> -->
 </head>
 
@@ -98,7 +98,7 @@
     <!--============================
         FOOTER PART START
     ==============================-->
-   @include('frontend.layouts.footer')
+    @include('frontend.layouts.footer')
     <!--============================
         FOOTER PART END
     ==============================-->
@@ -116,9 +116,14 @@
 
 
     <!--jquery library js-->
+    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> --}}
+
+     <script src="{{ asset('frontend/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('frontend/js/jquery-3.6.0.min.js') }}"></script>
     <!--bootstrap js-->
-    <script src="{{ asset('frontend/js/bootstrap.bundle.min.js') }}"></script>
+
+
+    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> --}}
     <!--font-awesome js-->
     <script src="{{ asset('frontend/js/Font-Awesome.js') }}"></script>
     <!--select2 js-->
@@ -152,6 +157,7 @@
 
     <!--main/custom js-->
     <script src="{{ asset('frontend/js/main.js') }}"></script>
+
     {{-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> --}}
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
@@ -190,6 +196,7 @@
     </script>
 
     @stack('scripts')
+
 
 </body>
 

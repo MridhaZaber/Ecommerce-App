@@ -1,9 +1,10 @@
 <?php
 
 use App\Http\Controllers\Backend\AdminController;
-use App\Http\Controllers\Frontend\FlashSaleController;
 use App\Http\Controllers\Backend\VendorController;
+use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\FlashSaleController as FrontendFlashSaleController;
+use App\Http\Controllers\Frontend\FlashSaleController;
 use App\Http\Controllers\Frontend\FrontendProducrController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\UserAddressController;
@@ -35,6 +36,11 @@ Route::get('flash-sale',[FlashSaleController::class,'index'])->name('flash-sale'
 /* Product Details Route */
 Route::get('product-detaile/{slug}',[FrontendProducrController::class,'showProduct'])->name('product-detaile');
 
+/**  cart routes */
+Route::post('add-to-cart',[CartController::class,'addToCart'])->name('add-to-cart');
+Route::get('cart-details',[CartController::class,'cartDetails'])->name('cart-details');
+
+Route::get('clear-cart', [CartController::class, 'clearCart']);
 
 
 Route::group(['middleware'=>['auth','verified'],'prefix'=>'user','as'=>'user.'],function(){

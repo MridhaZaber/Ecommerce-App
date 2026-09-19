@@ -1,15 +1,14 @@
 @extends('frontend.layouts.master')
 @section('title')
-{{ $settings->site_name }}||FlashSale
-
+    {{ $settings->site_name }}||FlashSale
 @endsection
 
 
 
 @section('content')
     <!--============================
-                        BREADCRUMB START
-                    ==============================-->
+                                BREADCRUMB START
+                            ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -26,13 +25,13 @@
         </div>
     </section>
     <!--============================
-                        BREADCRUMB END
-                    ==============================-->
+                                BREADCRUMB END
+                            ==============================-->
 
 
     <!--============================
-                        DAILY DEALS DETAILS START
-                    ==============================-->
+                                DAILY DEALS DETAILS START
+                            ==============================-->
     <section id="wsus__daily_deals">
         <div class="container">
             <div class="wsus__offer_details_area">
@@ -75,10 +74,9 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row flash-sell-slider">
 
                     @foreach ($flashSaleItems as $item)
-
                         @php
                             $product = \App\Models\Product::find($item->product_id);
 
@@ -91,15 +89,14 @@
                                     <span
                                         class="wsus__minus">-{{ calculateDiscountParcent($product->price, $product->offer_price) }}%</span>
                                 @endif
-                                <a class="wsus__pro_link" href="{{ route('product-detail',$product->slug) }}">
+                                <a class="wsus__pro_link" href="{{ route('product-detail', $product->slug) }}">
                                     <img src="{{ asset($product->thumb_image) }}" alt="product"
                                         class="img-fluid w-100 img_1" />
                                     <img src="{{ asset($product->thumb_image) }}" alt="product"
                                         class="img-fluid w-100 img_2" />
                                 </a>
                                 <ul class="wsus__single_pro_icon">
-                                    <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
-                                                class="far fa-eye"></i></a></li>
+                                    <li><a href="javascript:void(0)" class="eye-btn" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="far fa-eye"></i></a></li>
                                     <li><a href="#"><i class="far fa-heart"></i></a></li>
                                     <li><a href="#"><i class="far fa-random"></i></a>
                                 </ul>
@@ -113,9 +110,11 @@
                                         <i class="fas fa-star-half-alt"></i>
                                         <span>(133 review)</span>
                                     </p>
-                                    <a class="wsus__pro_name" href="{{ route('product-detail',$product->slug) }}">{{ $product->name }}</a>
+                                    <a class="wsus__pro_name"
+                                        href="{{ route('product-detail', $product->slug) }}">{{ $product->name }}</a>
                                     @if (checkDiscount($product))
-                                        <p class="wsus__price">{{ $settings->currency_icon }}{{ $product->offer_price }} <del>{{ $settings->currency_icon }}{{ $product->price }}</del>
+                                        <p class="wsus__price">{{ $settings->currency_icon }}{{ $product->offer_price }}
+                                            <del>{{ $settings->currency_icon }}{{ $product->price }}</del>
                                         </p>
                                     @else
                                         <p class="wsus__price">{{ $settings->currency_icon }}{{ $product->price }}</p>
@@ -142,21 +141,22 @@
         </div>
     </section>
     <!--============================
-                        DAILY DEALS DETAILS END
-                    ==============================-->
+                                DAILY DEALS DETAILS END
+                            ==============================-->
+
+ 
 @endsection
 
 @push('scripts')
     <script>
         $(document).ready(function() {
 
-
             simplyCountdown('.simply-countdown-one', {
                 year: {{ date('Y', strtotime($flashSaleDate->end_date)) }},
                 month: {{ date('m', strtotime($flashSaleDate->end_date)) }},
                 day: {{ date('d', strtotime($flashSaleDate->end_date)) }},
-
             });
+
 
 
         });
