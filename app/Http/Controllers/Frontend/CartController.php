@@ -50,11 +50,12 @@ class CartController extends Controller
         }else {
             $productPrice = $product->price;
         }
+         $qty = (int) ($request->qty ?? 1);
 
         $cartData = [];
         $cartData['id'] = $product->id;
         $cartData['name'] = $product->name;
-        $cartData['qty'] = $request->qty;
+        $cartData['qty'] = $qty;
         $cartData['price'] = $productPrice;
         $cartData['weight'] = 10;
         $cartData['options']['variants'] = $variants;
@@ -74,5 +75,11 @@ class CartController extends Controller
         $cartItems=Cart::content();
 
         return view('frontend.pages.cart-detail',compact('cartItems'));
+    }
+
+    /**Update product quantity */
+    public function updateProductQty(Request $request){
+        Cart::update($request->rowId,$request->quantity);
+        return response(['status'=>'success','message'=>'Product Quantity Updates']);
     }
 }

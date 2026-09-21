@@ -7,8 +7,8 @@
 
 @section('content')
     <!--============================
-                            BREADCRUMB START
-                        ==============================-->
+                                BREADCRUMB START
+                            ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -26,13 +26,13 @@
         </div>
     </section>
     <!--============================
-                            BREADCRUMB END
-                        ==============================-->
+                                BREADCRUMB END
+                            ==============================-->
 
 
     <!--============================
-                            CART VIEW PAGE START
-                        ==============================-->
+                                CART VIEW PAGE START
+                            ==============================-->
     <section id="wsus__cart_view">
         <div class="container">
             <div class="row">
@@ -66,7 +66,6 @@
 
                                     </tr>
                                     @foreach ($cartItems as $item)
-
                                         <tr class="d-flex">
                                             <td class="wsus__pro_img"><img src="{{ asset($item->options->image) }}"
                                                     alt="product" class="img-fluid w-100">
@@ -76,7 +75,8 @@
                                                 <p>{!! $item->name !!}</p>
                                                 @foreach ($item->options->variants as $key => $variant)
                                                     <span>{{ $key }}: {{ $variant['name'] }}
-                                                        ({{ $settings->currency_icon . $variant['price'] }})</span>
+                                                        ({{ $settings->currency_icon . $variant['price'] }})
+                                                    </span>
                                                 @endforeach
 
                                             </td>
@@ -86,10 +86,20 @@
 
 
                                             <td class="wsus__pro_tk">
-                                                <h6>{{ $settings->currency_icon.$item->price }}</h6>
+                                                <h6>{{ $settings->currency_icon . $item->price }}</h6>
                                             </td>
                                             <td class="wsus__pro_tk">
-                                                <h6>{{ $settings->currency_icon.$item->price + $item->options->variants_total}}</h6>
+                                                <h6>{{ $settings->currency_icon . $item->price + $item->options->variants_total }}
+                                                </h6>
+                                            </td>
+                                            <td class="wsus__pro_select">
+                                                <div class="product_qty_wrapper">
+                                                    <button class="btn btn-danger product-decrement ">-</button>
+                                                    <input class="product-qty" data-rowid="{{$item->rowId}}"
+                                                        type="text" min="1" max="100"
+                                                       value="1"/>
+                                                    <button class="btn btn-success product-increment ">+</button>
+                                                </div>
                                             </td>
 
                                             <td class="wsus__pro_icon">
@@ -154,6 +164,48 @@
         </div>
     </section>
     <!--============================
-                              CART VIEW PAGE END
-                        ==============================-->
+                                  CART VIEW PAGE END
+                            ==============================-->
 @endsection
+
+@push('scripts')
+
+<script>
+    $(document).ready(function(){
+       $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $('.product-increment').on('click',function(){
+           let input=$(this).siblings('.product-qty');
+           let quantity=parseInt(input.val())+1;
+           let rowId=input.data('rowid');
+           input.val(quantity);
+
+           $.ajax({
+            url:'{{ route('cart.update-quantity') }}',
+            method:'POST',
+            data:{
+                rowId:rowId,
+                quantity:quantity
+            },
+            success:function(data){
+                if(data.status == 'success'){
+                    toastr.success(data.message);
+                }
+
+            },
+            error:function(data){
+
+            }
+
+           })
+
+        })
+    })
+
+</script>
+
+@endpush
